@@ -69,12 +69,11 @@ Router::scope('/', function ($routes) {
 });
 
 Router::prefix('Api', function($routes) {
-    $extensions = ['json', 'xml'];
-    $routes->scope('/exports', ['controller' => 'Exports'], function ($routes) use ($extensions) {
-        $routes->extensions(array_merge($extensions, ['csv']));
+    $routes->extensions(['json', 'xml']);
+    $routes->scope('/exports', ['controller' => 'Exports'], function ($routes) {
+        $routes->addExtensions(['csv']);
         $routes->connect('/:action', ['controller' => 'Exports']);
     });
-    $routes->extensions($extensions);
     $routes->fallbacks('DashedRoute');
 });
 
